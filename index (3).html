@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Template — Nkemakolam</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0F1B2B;
+    --paper:#F6F3EC;
+    --gold:#B8912F;
+    --text:#EDEAE0;
+    --text-dim:#9BA8BA;
+    --text-paper:#1B2430;
+    --text-paper-dim:#5B6472;
+    --line-soft:#D8D2C2;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0; height:100%;}
+  body{background:var(--ink); color:var(--text); font-family:'IBM Plex Sans',sans-serif;}
+
+  #net{position:fixed; inset:0; width:100vw; height:100vh; opacity:0.55; z-index:0; pointer-events:none;}
+
+  .hero{position:relative; z-index:1; color:var(--text); padding:72px 28px 60px;}
+  .hero-content{position:relative; z-index:2; max-width:760px; margin:0 auto;}
+  .hero-top{display:flex; justify-content:space-between; align-items:flex-start; gap:24px; flex-wrap:wrap;}
+  .name{font-family:'Source Serif 4',serif; font-weight:600; font-size:2.6rem; color:#fff; margin:0 0 6px;}
+  .role{color:var(--gold); font-weight:500; margin:0 0 18px;}
+  .tagline{max-width:50ch; color:var(--text-dim); margin:0;}
+  .contact-block{font-family:'IBM Plex Mono',monospace; font-size:0.82rem; color:var(--text-dim); text-align:right; line-height:1.9; white-space:nowrap;}
+  .contact-block a{color:inherit; text-decoration:none; border-bottom:1px solid transparent;}
+  .contact-block a:hover{border-bottom-color:var(--gold); color:var(--gold);}
+
+  main{position:relative; z-index:1; padding:56px 0;}
+  .section-head{max-width:760px; margin:0 auto 20px; padding:0 28px;}
+  h2{font-family:'Source Serif 4',serif; font-size:1.3rem; margin:0 0 4px; color:#fff;}
+  .subhead{font-family:'IBM Plex Mono',monospace; font-size:0.76rem; color:var(--text-dim); text-transform:uppercase; margin:0;}
+
+  .carousel-wrap{position:relative; z-index:1; padding:8px 28px 20px;}
+  .carousel{
+    display:flex; gap:18px; overflow-x:auto; scroll-snap-type:x mandatory;
+    padding:4px 0 18px; -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin;
+  }
+  .card{
+    flex:0 0 82%; max-width:420px; scroll-snap-align:start;
+    background:#fff; border:1px solid var(--line-soft); border-radius:6px;
+    padding:22px 22px 20px;
+  }
+  .card-label{font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:var(--gold); text-transform:uppercase; margin:0 0 6px;}
+  .card h3{font-family:'Source Serif 4',serif; font-size:1.1rem; margin:0 0 10px;}
+  .card p{font-size:0.92rem; color:var(--text-paper-dim); margin:0 0 10px; line-height:1.5;}
+  .card .sub-label{font-family:'IBM Plex Mono',monospace; font-size:0.68rem; text-transform:uppercase; color:var(--text-paper-dim); margin:0 0 3px; letter-spacing:0.03em;}
+  .card img{max-width:100%; height:auto; border-radius:4px; margin:8px 0 12px; display:block;}
+  .card .sql-block{
+    background:var(--ink); color:var(--text); font-family:'IBM Plex Mono',monospace;
+    font-size:0.72rem; line-height:1.55; padding:12px 14px; border-radius:3px;
+    overflow-x:auto; margin:6px 0 12px; white-space:pre;
+  }
+  .tags{display:flex; gap:6px; flex-wrap:wrap;}
+  .tags span{font-family:'IBM Plex Mono',monospace; font-size:0.68rem; color:var(--gold); border:1px solid var(--gold); padding:2px 7px; border-radius:2px;}
+
+  .swipe-hint{
+    max-width:760px; margin:0 auto; padding:0 28px;
+    font-family:'IBM Plex Mono',monospace; font-size:0.72rem; color:var(--text-dim);
+  }
+
+  .plain-section{max-width:760px; margin:0 auto; padding:0 28px 8px;}
+  .plain-section p{color:var(--text-dim); font-size:0.98rem; max-width:66ch; margin:0 0 12px;}
+  .skills-row{display:flex; flex-wrap:wrap; gap:8px 24px; font-family:'IBM Plex Mono',monospace; font-size:0.85rem;}
+  .skills-row div{color:var(--text-dim);}
+  .skills-row span{color:#fff; font-weight:500;}
+
+  footer{max-width:760px; margin:0 auto; padding:20px 28px 60px; font-family:'IBM Plex Mono',monospace; font-size:0.78rem; color:var(--text-dim); position:relative; z-index:1;}
+
+  @media (max-width:600px){
+    .hero{padding:48px 20px 44px;}
+    .name{font-size:2rem;}
+    .hero-top{flex-direction:column;}
+    .contact-block{text-align:left;}
+    .card{flex-basis:88%;}
+  }
+</style>
+</head>
+<body>
+
+  <canvas id="net"></canvas>
+
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-top">
+        <div>
+          <p class="name">Nkemakolam</p>
+          <p class="role">Data Analyst</p>
+          <p class="tagline">Quantitative background in algorithmic trading and market data systems, applied to structured analysis, Excel, and SQL.</p>
+        </div>
+        <div class="contact-block">
+          09068924011<br>
+          <a href="mailto:nkamuel@gmail.com">nkamuel@gmail.com</a><br>
+          Lagos, Nigeria<br>
+          <a href="#">linkedin.com/in/emmanuel-nkemakolam</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <div class="section-head">
+      <h2>About</h2>
+    </div>
+    <div class="plain-section">
+      <p>I work independently at the intersection of data and financial markets, building the tools to collect, clean, and interpret market data, then using that same rigor for structured analysis. Excel and SQL are where I turn raw data into something a team can act on; Python is where I automate the collection and testing behind it.</p>
+    </div>
+
+    <div class="section-head" style="margin-top:36px;">
+      <h2>Skills</h2>
+    </div>
+    <div class="plain-section">
+      <div class="skills-row">
+        <div><span>Excel</span> — pivot tables, formulas, dashboarding</div>
+        <div><span>SQL</span> — querying, joins, aggregation</div>
+        <div><span>Python</span> — pandas, NumPy</div>
+        <div><span>Analysis</span> — backtesting, time-series, hypothesis testing</div>
+      </div>
+    </div>
+
+    <div class="section-head" style="margin-top:44px;">
+      <h2>Case Studies</h2>
+      <p class="subhead">Swipe to browse · 11 projects</p>
+    </div>
+    <div class="carousel-wrap">
+      <div class="carousel">
+
+        <div class="card">
+          <p class="card-label">Excel · Pivot Tables</p>
+          <h3>Answering Any Investor Question, On the Spot</h3>
+          <p class="sub-label">The Ask</p>
+          <p>Leadership needed to walk into an investor meeting ready for granular questions, not "how's Lagos doing" but "how are VIP customers in Lagos buying Electronics." Any combination of state, category, or segment had to be answerable instantly.</p>
+          <p class="sub-label">Result</p>
+          <p>Lagos emerged as the clear star performer, ₦30.06M in revenue across 196 transactions, more than double the next-highest state. FCT was a strong secondary market at ₦12.54M.</p>
+          <img src="case1.png" alt="Pivot table breaking down revenue and transactions by state, category, and customer segment">
+          <div class="tags"><span>Pivot Tables</span><span>Excel</span></div>
+        </div>
+
+        <div class="card">
+          <p class="card-label">Excel · VLOOKUP</p>
+          <h3>Is the VIP Program Actually Worth It?</h3>
+          <p class="sub-label">The Ask</p>
+          <p>Marketing needed a numbers-only answer on VIP program ROI, but segment data lived in a separate customer database from the sales file.</p>
+          <p class="sub-label">Result</p>
+          <p>Regular customers drove the most total revenue (₦27.7M), but VIPs had the highest average transaction size (₦185,927) despite the fewest transactions, each VIP interaction carries outsized value.</p>
+          <img src="case2.png" alt="Pivot table and chart comparing revenue by customer segment, with analysis notes">
+          <div class="tags"><span>VLOOKUP</span><span>Segmentation</span></div>
+        </div>
+
+        <div class="card">
+          <p class="card-label">Excel · Comparative Analysis</p>
+          <h3>Finding the Story Behind a Quarter</h3>
+          <p class="sub-label">The Ask</p>
+          <p>The board wanted a Q3 review comparing September to June, not just totals, but which categories grew or declined, in percentages.</p>
+          <p class="sub-label">Result</p>
+          <p>Fashion – Men and Home – Kitchen gained share; Electronics – Accessories and Fashion – Women declined most. Each finding paired with a plain-language insight and recommendation.</p>
+          <img src="case3.png" alt="Table comparing June and September revenue by category with growth analysis notes">
+          <div class="tags"><span>% Change</span><span>Reporting</span></div>
+        </div>
+
+        <div class="card">
+          <p class="card-label">Excel · Stratified Analysis</p>
+          <h3>Documenting an Outcome Before Escalation</h3>
+          <p class="sub-label">The Ask</p>
+          <p>A department head needed to document a possible outlier before referring it to a review committee, full data and context, not assumptions.</p>
+          <p class="sub-label">Result</p>
+          <p>The case load was heavily concentrated in the highest-complexity categories, showing the outcome variance was driven by case-mix acuity rather than performance. Delivered as a concise memo.</p>
+          <img src="case4.png" alt="Pivot table of outcomes by case complexity with a written summary memo">
+          <div class="tags"><span>Pivot Tables</span><span>Memo Writing</span></div>
+        </div>
+
+        <div class="card">
+          <p class="card-label">Excel · Rapid Analysis</p>
+          <h3>A Clear Answer in Under 15 Minutes</h3>
+          <p class="sub-label">The Ask</p>
+          <p>A regional director suspected Lagos revenue looked "off." The manager needed an answer before a call ended, from a messy file, in about 13 minutes.</p>
+          <p class="sub-label">Result</p>
+          <p>Lagos contributed ₦49.49M, 46% of total revenue, the highest of any location. Lagos wasn't underperforming, it was the strongest region.</p>
+          <img src="case5.png" alt="Summary box showing total revenue, transaction count, and Lagos share of revenue">
+          <div class="tags"><span>SUMIF</span><span>Executive Summary</span></div>
+        </div>
+
+        <div class="card">
+          <p class="card-label">SQL · Aggregation</p>
+          <h3>Per-Loan Profitability for the Credit Team</h3>
+          <p class="sub-label">The Ask</p>
+          <p>The credit team needed a line-by-line view of every loan showing actual profit or loss, not just aggregate totals.</p>
+          <pre class="sql-block">SELECT loan_id,
+principal_amount,
+fee_amount,
+(total_amount-principal_amount) AS Total_interest_earned,
+(fee_amount+(total_amount-principal_amount)) AS Total_Rev_from_loan,
+ROUND(((fee_amount+(total_amount-principal_amount))/num_installments),1) AS profit_per_installments
+ FROM bnpl_loans
+ WHERE num_installments > 0</pre>
+          <p class="sub-label">Result</p>
+          <p>A per-loan profitability view across the entire book in one query, letting the team instantly flag underperforming loans.</p>
+          <div class="tags"><span>SQL</span><span>Financial Analysis</span></div>
+        </div>
+
+        <div class="card">
+          <p class="card-label">SQL · GROUP BY / HAVING</p>
+          <h3>Spotting Thriving vs. Struggling Regions</h3>
+          <p class="sub-label">The Ask</p>
+          <p>The Head of Expansion needed a regional health check, limited to regions large enough to matter, weakest surfaced first.</p>
+          <pre class="sql-block">SELECT 
+region_id,
+COUNT(*) AS Total_number_of_customers,
+AVG(lifetime_value) AS avg_lifetime_value,
+MAX(lifetime_value) AS max_lifetime_value,
+MIN(total_orders) AS min_total_orders
+ FROM CUSTOMERS
+ GROUP BY region_id
+ HAVING COUNT(*) > 50
+ ORDER BY AVG(lifetime_value) ASC</pre>
+          <p class="sub-label">Result</p>
+          <p>Surfaced the weakest-performing regions at a glance, so leadership could prioritize which markets needed intervention first.</p>
+          <div class="tags"><span>SQL</span><span>Customer Analytics</span></div>
+        </div>
+
+        <div class="card">
+          <p class="card-label">SQL · GROUP BY / HAVING</p>
+          <h3>Flagging Support Agents Who Need Coaching</h3>
+          <p class="sub-label">The Ask</p>
+          <p>The Head of Customer Experience wanted agents with real ticket volume whose average resolution time was too slow.</p>
+          <pre class="sql-block">SELECT COUNT(*) AS TICKET_COUNT,
+assigned_to,
+AVG(resolution_hours) AS AVG_resolution_hours
+FROM support_tickets
+WHERE ticket_status = 'Resolved'
+GROUP BY assigned_to
+HAVING COUNT (*) > 20
+AND AVG(resolution_hours) > 48
+ORDER BY avg_resolution_hours DESC</pre>
+          <p class="sub-label">Result</p>
+          <p>A targeted coaching list instead of a general performance dump that would have buried the agents who actually needed attention.</p>
+          <div class="tags"><span>SQL</span><span>Performance Analysis</span></div>
+        </div>
+
+        <div class="card">
+          <p class="card-label">SQL · GROUP BY</p>
+          <h3>Where Customers Are Concentrated, by State</h3>
+          <p class="sub-label">The Ask</p>
+          <p>The expansion team needed to know where customers were concentrated geographically and how valuable they were, to guide marketing budget.</p>
+          <pre class="sql-block">SELECT
+COUNT(*) AS concentrated_customers,
+state, AVG (lifetime_value) AS avg_lifetimevalue
+FROM customers 
+GROUP BY state
+ORDER BY COUNT(*) desc</pre>
+          <p class="sub-label">Result</p>
+          <p>A ranked view of states by customer volume alongside average customer value in a single query.</p>
+          <div class="tags"><span>SQL</span><span>Market Analysis</span></div>
+        </div>
+
+        <div class="card">
+          <p class="card-label">SQL · CASE WHEN</p>
+          <h3>Weekday vs. Weekend Revenue, on Short Notice</h3>
+          <p class="sub-label">The Ask</p>
+          <p>An 11pm Sunday message from the CEO, wanting average revenue per order for weekdays vs weekends, delivered orders only, requirements shifting mid-message.</p>
+          <pre class="sql-block">SELECT
+    CASE 
+        WHEN EXTRACT(DOW FROM order_date) IN (0, 6) THEN 'Weekend'
+        ELSE 'Weekday'
+    END AS day_type,
+    COUNT(*) AS order_count,
+    AVG(total_amount) AS avg_order_value
+FROM orders
+WHERE order_status = 'Delivered'
+GROUP BY day_type;</pre>
+          <p class="sub-label">Result</p>
+          <p>A same-night, two-row comparison settling the claim with data instead of anecdote.</p>
+          <div class="tags"><span>SQL</span><span>Date Logic</span></div>
+        </div>
+
+        <div class="card">
+          <p class="card-label">Technical · Python</p>
+          <h3>CryptoBot</h3>
+          <p>Algorithmic trading engine for MEXC USDT-M perpetual futures. Rebuilt the signal logic across several versions to add supply and demand zone detection, walk-forward backtesting, and regime-switching. Diagnosed a critical logic bug by comparing live paper-trading results against backtest output.</p>
+          <div class="tags"><span>Python</span><span>pandas</span><span>ccxt</span></div>
+        </div>
+
+        <div class="card">
+          <p class="card-label">Technical · Backend</p>
+          <h3>ProofWork</h3>
+          <p>Backend for a verified-human micro-task platform on the Pi Network. Built the worker consensus loop and deployment pipeline from scratch, shipping through Render via a GitHub-integrated workflow.</p>
+          <div class="tags"><span>Node.js</span><span>Express</span><span>GitHub</span></div>
+        </div>
+
+      </div>
+      <p class="swipe-hint">← swipe or drag →</p>
+    </div>
+
+    <div class="section-head" style="margin-top:44px;">
+      <h2>Education</h2>
+    </div>
+    <div class="plain-section">
+      <p>B.Sc. Physiology, First Class Honours<br>Lead City University, 2025</p>
+    </div>
+  </main>
+
+  <footer>
+    nkamuel@gmail.com · Lagos, Nigeria
+  </footer>
+
+<script>
+  const canvas = document.getElementById('net');
+  const ctx = canvas.getContext('2d');
+  let w, h, points;
+
+  function resize(){
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+
+  function initPoints(){
+    const count = Math.min(46, Math.floor((w*h)/18000));
+    points = Array.from({length: count}, () => ({
+      x: Math.random()*w,
+      y: Math.random()*h,
+      vx: (Math.random()-0.5)*0.25,
+      vy: (Math.random()-0.5)*0.25
+    }));
+  }
+
+  function tick(){
+    ctx.clearRect(0,0,w,h);
+    for(const p of points){
+      p.x += p.vx; p.y += p.vy;
+      if(p.x<0||p.x>w) p.vx*=-1;
+      if(p.y<0||p.y>h) p.vy*=-1;
+    }
+    for(let i=0;i<points.length;i++){
+      for(let j=i+1;j<points.length;j++){
+        const a=points[i], b=points[j];
+        const d = Math.hypot(a.x-b.x, a.y-b.y);
+        if(d<140){
+          ctx.strokeStyle = `rgba(184,145,47,${0.16*(1-d/140)})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
+          ctx.stroke();
+        }
+      }
+    }
+    for(const p of points){
+      ctx.fillStyle = 'rgba(184,145,47,0.7)';
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,1.6,0,Math.PI*2);
+      ctx.fill();
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function setup(){
+    resize();
+    initPoints();
+  }
+  window.addEventListener('resize', setup);
+  window.addEventListener('load', setup);
+  setup();
+  tick();
+</script>
+
+</body>
+</html>
