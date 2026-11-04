@@ -280,66 +280,14 @@ GROUP BY day_type;</pre>
           <div class="tags"><span>SQL</span><span>Date Logic</span></div>
         </div>
 
-        <section class="case-study" id="cryptobot">
-  <h2>CryptoBot: validating a systematic futures signal before risking capital</h2>
-  <p class="tags">Python · Quantitative research · Walk-forward validation · Backtesting · Crypto perpetual futures · Risk management</p>
-
-  <h3>The Ask</h3>
-  <p>Can a rules-based signal engine for USDT-margined crypto perpetual futures show a real, repeatable edge once transaction costs, funding and out-of-sample testing are taken seriously? The goal was a research process I could defend, not a strategy that merely looked good on past data.</p>
-
-  <h3>Approach</h3>
-  <ul>
-    <li><strong>Regime model.</strong> A two-layer BTC-anchored regime detector: a macro layer (daily 200-day SMA slope, RSI, higher-highs/higher-lows) and a tactical layer (4h ADX/DI, MACD histogram, EMA50), with a persistence filter so regimes must hold for three bars before they change the trading gate.</li>
-    <li><strong>Signal and gating.</strong> Directional gating by regime phase, key-level detection (swing points, multi-touch clusters, round numbers, trendlines, Fibonacci), and proximity filters.</li>
-    <li><strong>Risk and execution.</strong> Fixed stop-loss and take-profit, intracandle exit detection using 5-minute high/low, a cluster stop-loss cooldown, and a paper-trading simulator that tracks fees and funding.</li>
-    <li><strong>Validation.</strong> Walk-forward testing (8-month train, 4-month test) plus an audit of whether the backtest ran the same code as the live bot.</li>
-  </ul>
-
-  <figure>
-    <svg viewBox="0 0 760 120" role="img" aria-label="Pipeline: market data to regime to signal to risk to execution, with a validation loop" style="width:100%;height:auto">
-      <defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#2a4d69"/></marker></defs>
-      <g font-family="system-ui,sans-serif" font-size="13" text-anchor="middle">
-        <rect x="5" y="30" width="130" height="50" rx="6" fill="#eef3f8" stroke="#2a4d69"/><text x="70" y="52">Market data</text><text x="70" y="69" font-size="11" fill="#555">MEXC 5m–1d klines</text>
-        <rect x="165" y="30" width="130" height="50" rx="6" fill="#eef3f8" stroke="#2a4d69"/><text x="230" y="52">Regime</text><text x="230" y="69" font-size="11" fill="#555">macro + tactical</text>
-        <rect x="325" y="30" width="130" height="50" rx="6" fill="#eef3f8" stroke="#2a4d69"/><text x="390" y="52">Signal</text><text x="390" y="69" font-size="11" fill="#555">gate + key levels</text>
-        <rect x="485" y="30" width="130" height="50" rx="6" fill="#eef3f8" stroke="#2a4d69"/><text x="550" y="52">Risk</text><text x="550" y="69" font-size="11" fill="#555">SL/TP, cooldowns</text>
-        <rect x="625" y="30" width="130" height="50" rx="6" fill="#eef3f8" stroke="#2a4d69"/><text x="690" y="52">Execution</text><text x="690" y="69" font-size="11" fill="#555">paper, fees, funding</text>
-        <line x1="135" y1="55" x2="163" y2="55" stroke="#2a4d69" stroke-width="1.5" marker-end="url(#a)"/>
-        <line x1="295" y1="55" x2="323" y2="55" stroke="#2a4d69" stroke-width="1.5" marker-end="url(#a)"/>
-        <line x1="455" y1="55" x2="483" y2="55" stroke="#2a4d69" stroke-width="1.5" marker-end="url(#a)"/>
-        <line x1="615" y1="55" x2="623" y2="55" stroke="#2a4d69" stroke-width="1.5" marker-end="url(#a)"/>
-        <path d="M690,82 L690,104 L70,104 L70,84" fill="none" stroke="#999" stroke-dasharray="4 3" marker-end="url(#a)"/>
-        <text x="380" y="117" font-size="11" fill="#555">Walk-forward validation: 8-month train / 4-month out-of-sample test, then compare with live paper results</text>
-      </g>
-    </svg>
-    <figcaption>System architecture. Every stage is tested against out-of-sample data before the next is trusted.</figcaption>
-  </figure>
-
-  <h3>Result</h3>
-  <p>The honest result is negative. I'm presenting it as a finding, not a failure to hide.</p>
-  <ul>
-    <li><strong>Backtest (962 trades, May 2025 to May 2026, actual bot code):</strong> net −9.7% from $10,000, profit factor 0.91, win rate 33.7%, max drawdown 13.6%.</li>
-    <li><strong>Cost analysis:</strong> gross P&amp;L was −$158; fees were $788 and funding $26. Trading costs, not the signal, drove the loss, so the edge was smaller than the fee load.</li>
-    <li><strong>Earlier overfit result:</strong> an earlier +24% backtest was run on different code from the deployed bot. Re-running on the live code gave −9.7%. Lesson: verify that the tested artifact is the deployed artifact.</li>
-    <li><strong>Walk-forward:</strong> only a few sub-strategies (pullback longs, certain hours and symbols) held their behaviour across windows. Most others flipped sign out of sample, so I restricted the system to the parts that held.</li>
-    <li><strong>Paper trading (May 2026, 73 trades):</strong> 39.7% win rate, +$418 with profit factor 1.79. Most of it came in the first week; the following weeks were weaker (38.5% and 25.0% win rate). One month of paper trading with 73 trades is too small a sample to call an edge.</li>
-  </ul>
-
-  <figure>
-    <img src="cryptobot_equity_curve.png" alt="Equity curve from backtest, May 2025 to May 2026, ending at $9,028 against a $10,000 start" style="width:100%;height:auto">
-    <figcaption>Equity from the 962-trade backtest on the actual bot code. The chart shows a loss, and the drawdown is part of the result.</figcaption>
-  </figure>
-
-  <h3>What I took from it</h3>
-  <ul>
-    <li>Walk-forward and out-of-sample testing are not optional. In-sample results were misleading by about 34 percentage points.</li>
-    <li>Transaction costs must be modelled from the start. A signal with a small gross edge can be unprofitable after fees.</li>
-    <li>Confirm that the backtest runs the same code as production, or results mean nothing.</li>
-    <li>Next step: rebuild the signal engine with walk-forward discipline, and only keep components that hold across out-of-sample windows after costs.</li>
-  </ul>
-
-  <p class="note">This is a personal research project on paper trading, not a live trading record and not investment advice. No strategy has been shown to be profitable.</p>
-</section>
+        <!-- Replace the CryptoBot card in index.html with this. Same structure as the other cards. -->
+<div class="card">
+  <p class="card-label">Technical · Quantitative Research</p>
+  <h3>CryptoBot: Validating a Systematic Futures Signal</h3>
+  <p>Built a rules-based signal engine for crypto perpetual futures, then tested it honestly. Walk-forward validation and cost analysis showed no demonstrated edge after fees. The write-up covers the validation process and the rebuild.</p>
+  <p><a href="cryptobot.html">Read the full case study &rarr;</a></p>
+  <div class="tags"><span>Python</span><span>Walk-forward validation</span><span>Backtesting</span><span>Risk management</span></div>
+</div>
 
 
         <div class="card">
